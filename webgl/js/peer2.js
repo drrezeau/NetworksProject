@@ -26,7 +26,7 @@ function connect2Peer() {
     });
 
     $("#getPeerUsername").addClass('hide');
-    receivePeer();
+    gameSettings();
 }
 
 function receivePeer() {
