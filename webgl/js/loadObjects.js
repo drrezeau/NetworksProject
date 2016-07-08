@@ -1,7 +1,7 @@
 function loadObjects() {
 
     var loader = new THREE.ObjectLoader();
-    loader.load("/webgl/objects/tank/tank.json",function ( obj ) {
+    loader.load("/NetworksProject/webgl/objects/tank/tank.json",function ( obj ) {
         obj.position.z = -20;
         obj.scale.set(1.4,1.4,1.4);
         scene.add( obj );
@@ -33,7 +33,7 @@ function loadObjects() {
     });   
     
     var loader = new THREE.ObjectLoader();
-    loader.load("/webgl/objects/tank02/tank02.json",function ( obj ) {
+    loader.load("/NetworksProject/webgl/objects/tank02/tank02.json",function ( obj ) {
         obj.scale.set(1.75, 1.4, 2);
         obj.position.z = -50;
         scene.add( obj );

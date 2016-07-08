@@ -9,19 +9,18 @@
 </head>
 <body>
     <script>
-        var pads;
 
-        var fogOn = false;
-        var fogIntensity = 0;
-        var lightIntensity = 1;
-        var healthPackOn = false;
-        var speedBoostOn = false;
-        var bulletBoostOn = false;
-        var ultPowerOn = false;
-        var numWalls = 10;
+        var fogOn = true;
+        var fogIntensity = 3;
+        var lightIntensity = 7;
+        var healthPackOn = true;
+        var speedBoostOn = true;
+        var bulletBoostOn = true;
+        var ultPowerOn = true;
+        var numWalls = 5;
         
-        var X_SIZE = 600;
-        var Z_SIZE = 600;
+        var X_SIZE = 500;
+        var Z_SIZE = 500;
     </script>
     <script src="js/userSettings.js"></script>
     <script src="js/jquery-1.11.3.min.js"></script>
@@ -51,44 +50,8 @@
                     </div>
                 </div>
                     <div class="controlsLeft">
-                        <p class="userInput">
-                            <span class="checkboxText">Fog On</span>
-                            <input id="FogOn" type="checkbox" value="true" checked>
-                        </p>
-                        <p class="userInput">
-                            <span class="checkboxText">Fog Intensity</span>
-                            <input id="FogInt" type="text" value="3" min="0" max="1">
-                        </p>
-                        <p class="userInput">
-                            <span class="checkboxText">Light Intensity</span>
-                            <input id="lightInt" type="text" value="7" min="0" max="1">
-                        </p>
-                        <p class="userInput">
-                            <span class="checkboxText">Health Power Up On</span>
-                            <input id="health" type="checkbox" checked>
-                        </p>
-                        <p class="userInput">
-                            <span class="checkboxText">Speed Power Up On</span>
-                            <input id="speed" type="checkbox" checked>
-                        </p>
-                        <p class="userInput">
-                            <span class="checkboxText">Bullet Power Up On</span>
-                            <input id="bullet" type="checkbox" checked>
-                        </p>
-                        <p class="userInput">
-                            <span class="checkboxText">Ultimate Power Up On</span>
-                            <input id="ult" type="checkbox" checked>
-                        </p>
-                        <p class="userInput">
-                            <span class="checkboxText">Number of Walls</span>
-                            <input id="numWalls" type="text" value="5" min="0" max="1">
-                        </p>
-                        <p class="userInput">
-                            <span class="checkboxText">Size of Arena</span>
-                            <input id="arenaSize" type="text" value="400" min="0" max="1">
-                        </p>
+                        <p>Waiting to connect to another player</p>
                         <button onclick="gameSettings()" id="close">Ready!</button>
-
                     </div>
                 <div id="player2">
                     <div class="controlDiv">
@@ -117,7 +80,6 @@
     <script src="js/bullet.js"></script>
     <script src="js/loadBullet.js"></script>
     <script src="js/powerUp.js"></script>
-    <script src="js/controls.js"></script>
     <script src="js/explosion.js"></script>
     <script src="js/parkingGarage.js"></script>
     <script src="js/brickWalls.js"></script>
@@ -363,7 +325,7 @@
     
     //Tank02  
     var tank02;    
-    var tank02Movement = {speed: 1, turnSpeed: .02, driveAngle: 0, shootAngle: 0};  
+    var tank02Movement = {speed: 1, turnSpeed: .02, driveAngle: 0, shootAngle: 0};
 
     //Important stuff  
     var scene, camera, camera2, renderer, keyboard;
@@ -378,20 +340,8 @@
     var explosion;
 
     var audio;
-    var pad01, pad02;
+    var player1 = false;
 
-    controllers();
-    window.addEventListener("gamepadconnected", function(e) {
-        console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
-                e.gamepad.index, e.gamepad.id,
-                e.gamepad.buttons.length, e.gamepad.axes.length);
-        console.log(e);
-        if (pad01 == undefined) {
-            pad01 = pads[e.gamepad.index];
-        } else {
-            pad02 = pads[e.gamepad.index];
-        }
-    });
 /***********************************************************************************************************************
 * INIT()
 *    Sets up the scene.
@@ -434,6 +384,7 @@
         // Set up controls for the keyboard
         keyboard = new THREEx.KeyboardState();
 
+    fogIntensity = 2;
     console.log(fogIntensity);
     if (fogOn) {
         scene.fog = new THREE.Fog(0x333333, fogIntensity *.01, fogIntensity*100);
@@ -490,15 +441,31 @@
 function animate() {
     
         requestAnimationFrame(animate);
-        controllers();
         render();
 
-        keypress();
+    var myTank, enemyTank;
+    var myTankMovement, enemyTankMovement;
+    if (player1) //I AM PLAYER 1
+    {
+        myTank = tank01;
+        myTankMovement = tank01Movement;
+        enemyTank = tank02;
+        enemyTankMovement = tank02Movement;
+    }
+    else //I AM PLAYER 2
+    {
+        myTank = tank02;
+        myTankMovement = tank02Movement;
+        enemyTank = tank01;
+        enemyTankMovement = tank01Movement;
+    }
+        keypressMyTank(myTank, myTankMovement, enemyTank);
+        keypressEnemyTank(myTank, myTankMovement, enemyTank);
 
-        updateBullet(tank01, tank02);
-        updateBullet(tank02, tank01);
-        advance(tank01);
-        advance(tank02);
+        updateBullet(myTank, enemyTank);
+        updateBullet(enemyTank, myTank);
+        advance(myTank);
+        advance(enemyTank);
 
     if (healthPackOn) {
         if (healthPackReload) {
@@ -545,7 +512,6 @@ function animate() {
 *******************************************************************************************************************************/
 function render() {
         renderer.clear();
-    //controllers();
     if (audio.ended) {
         audio.play();
     }
@@ -564,41 +530,26 @@ function render() {
 *
 *
 *******************************************************************************************************************************/
-function keypress() {
-    if (scene.getObjectByName("Tank1")) {
-        //Tank01
-        if (keyboard.pressed("a")) {keyboardLeft(tank01, tank01Movement);}
-        if (keyboard.pressed("d")) {keyboardRight(tank01, tank01Movement);}
-        if (keyboard.pressed("w")) {keyboardUp(tank01, tank01Movement, tank02);}
-        if (keyboard.pressed("s")) {keyboardDown(tank01, tank01Movement);}
-        if (keyboard.pressed("f")) {keyboardShoot(tank01, tank01Movement);}
-        if(keyboard.pressed("q")) { keyboardChangeCamera(tank01);}
-        //if(keyboard.pressed("a")) { keyboardA(); }
-        //if(keyboard.pressed("d")) { keyboardD(); }
-        if (pads[0] != undefined) {
-            pad01 = pads[0];
-        }
-
-        if (pad01) {
-            controller(pad01, tank01, tank01Movement, tank02);
-        }
+function keypressMyTank(myTank, myTankMovement, enemyTank) {
+    if (scene.getObjectByName(myTank.name)) {
+        //myTank
+        if (keyboard.pressed("a")) {keyboardLeft(myTank, myTankMovement);}
+        if (keyboard.pressed("d")) {keyboardRight(myTank, myTankMovement);}
+        if (keyboard.pressed("w")) {keyboardUp(myTank, myTankMovement, enemyTank);}
+        if (keyboard.pressed("s")) {keyboardDown(myTank, myTankMovement);}
+        if (keyboard.pressed("f")) {keyboardShoot(myTank, myTankMovement);}
+        if (keyboard.pressed("q")) {keyboardChangeCamera(myTank);}
     }
-    if (scene.getObjectByName("Tank2")) {
-        //Tank02
-        if (keyboard.pressed("left")) {keyboardLeft(tank02, tank02Movement);}
-        if (keyboard.pressed("right")) {keyboardRight(tank02, tank02Movement);}
-        if (keyboard.pressed("up")) {keyboardUp(tank02, tank02Movement, tank01);}
-        if (keyboard.pressed("down")) {keyboardDown(tank02, tank02Movement);}
-        if (keyboard.pressed("shift")) {keyboardShoot(tank02, tank02Movement);}
-        if(keyboard.pressed("space")) { keyboardChangeCamera(tank02);}
-        
-        if (pads[1] != undefined) {
-            pad02 = pads[1];
-        }
-        
-        if (pad02) {
-            controller(pad02, tank02, tank02Movement, tank01);
-        }
+}
+function keypressEnemyTank(myTank, myTankMovement, enemyTank) {
+    if (scene.getObjectByName(myTank.name)) {
+        //EnemyTank
+        if (keyboard.pressed("left")) {keyboardLeft(myTank, myTankMovement);}
+        if (keyboard.pressed("right")) {keyboardRight(myTank, myTankMovement);}
+        if (keyboard.pressed("up")) {keyboardUp(myTank, myTankMovement, enemyTank);}
+        if (keyboard.pressed("down")) {keyboardDown(myTank, myTankMovement);}
+        if (keyboard.pressed("shift")) {keyboardShoot(myTank, myTankMovement);}
+        if(keyboard.pressed("space")) { keyboardChangeCamera(myTank);}
     }
 }
 
@@ -608,6 +559,7 @@ function keypress() {
 *
 *******************************************************************************************************************************/
 function setUpLight() {
+    lightIntensity = 7;
     hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, lightIntensity * .2 );
     hemiLight.position.set( X_SIZE / 2, 100, Z_SIZE / 2 );
     scene.add( hemiLight );
