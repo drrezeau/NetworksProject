@@ -11,9 +11,9 @@ input[type=checkbox] {
     /* Webkit browsers*/
     -webkit-transform: scale(2.5);
 }
-input[type=text] {
-    width: 50px;
-}
+/*input[type=text] {*/
+    /*width: 50px;*/
+/*}*/
 .checkboxText {
     margin-left: 10px;
     margin-right: 10px;
@@ -127,8 +127,8 @@ p {
     z-index:100;
 }
 
-p {
-    margin-top: 5px;
-    height: 14px;
-    margin-bottom: 5px;
-}
+/*p {*/
+    /*margin-top: 5px;*/
+    /*height: 14px;*/
+    /*margin-bottom: 5px;*/
+/*}*/
