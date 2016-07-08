@@ -35,14 +35,26 @@
         </div>
     </div>
 
-    <div class="howToPlayHolder">
+    <!--CREATE YOUR ID-->
+    <div class="howToPlayHolder" id="getMyUsername">
         <div class="howToPlay">
             <p style="padding: 5px">Enter a username:</p>
-            <input type="text" style="width: 200px"/>
+            <input id="myUsername" type="text" style="width: 200px"/>
             <p></p>
-            <button onclick="">Submit</button>
+            <button onclick="connect2Server()">Submit</button>
         </div>
     </div>
+
+    <!--Gets the second player ID-->
+    <div class="howToPlayHolder" style="display: none;" id="getPeerUsername">
+        <div class="howToPlay">
+            <p style="padding: 5px">Enter your Friend's username:</p>
+            <input id="peerUsername" type="text" style="width: 200px"/>
+            <p></p>
+            <button onclick="connect2Peer()">Submit</button>
+        </div>
+    </div>
+
     <div class="howToPlayHolder" style="display: none">
         <div class="howToPlay">
             <div class="keyboardControls">
@@ -75,6 +87,8 @@
             </div>
         </div>
     </div>
+
+
     
     <script src="bower_components/three.js/build/three.js"></script>
     <script src="bower_components/three.js/examples/js/loaders/OBJLoader.js"></script>
@@ -357,6 +371,7 @@
 ************************************************************************************************************************/
     function init() {
 
+        receivePeer();
         // Create the scene and set the scene size.
         scene = new THREE.Scene();
         WIDTH = window.innerWidth - 10, HEIGHT = window.innerHeight - 10;
