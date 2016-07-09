@@ -20,7 +20,10 @@ function gameSettings() {
     // Z_SIZE = X_SIZE;
     
     init();
-    animate();
+    setTimeout(function(){
+        $("#playerControls").addClass('hide');
+        animate();
+    }, 2000);
 }
 
 function controller(pad, tank, tankMovement, otherTank) {
