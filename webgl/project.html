@@ -546,6 +546,7 @@ function keypressMyTank(myTank, myTankMovement, enemyTank) {
         if (keyboard.pressed("f")) {keyboardShoot(myTank, myTankMovement);}
         if (keyboard.pressed("q")) {keyboardChangeCamera(myTank);}
     }
+    sendData("stuff");
 }
 function keypressEnemyTank(myTank, myTankMovement, enemyTank) {
     if (scene.getObjectByName(myTank.name)) {
