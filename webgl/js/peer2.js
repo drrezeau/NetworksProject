@@ -16,18 +16,21 @@ function connect2Server() {
 
 }
 
+var conn;
 function connect2Peer() {
     peerUserName = $("#peerUsername").val();
 
-    var conn = peer.connect(peerUserName);
-
-    conn.on('open', function(){
-        conn.send('hi!');
-    });
+    conn = peer.connect(peerUserName);
+    
 
     $("#getPeerUsername").addClass('hide');
     $("#playerControls").removeClass('hide');
     gameSettings();
+}
+function sendData(data) {
+    conn.on('open', function(){
+        conn.send('hi!');
+    });
 }
 
 function receivePeer() {
