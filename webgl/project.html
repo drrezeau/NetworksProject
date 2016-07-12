@@ -54,7 +54,7 @@
             <p style="padding: 5px">Enter your Friend's username:</p>
             <input id="peerUsername" type="text" style="width: 200px"/>
             <p></p>
-            <button onclick="connect2Peer()">Submit</button>
+            <button onclick="hideStuff()">Submit</button>
         </div>
     </div>
 
@@ -444,7 +444,7 @@
 ******************************************************************************************************************************/
 function animate() {
 
-    receivePeer();
+    connect2Peer();
 
     requestAnimationFrame(animate);
     render();

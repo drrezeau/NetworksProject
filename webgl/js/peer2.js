@@ -16,25 +16,29 @@ function connect2Server() {
 
 }
 
-var conn;
-function connect2Peer() {
-    peerUserName = $("#peerUsername").val();
-
-    conn = peer.connect(peerUserName);
-    
-
+function hideStuff() {
     $("#getPeerUsername").addClass('hide');
     $("#playerControls").removeClass('hide');
     gameSettings();
 }
-function sendData(data) {
+
+function connect2Peer(data) {
+    peerUserName = $("#peerUsername").val();
+
+    var conn = peer.connect(peerUserName);
+    sendData(data, conn);
+    receivePeer(conn);
+    
+}
+function sendData(data, conn) {
+    console.log("SEND DATA");
     conn.on('open', function(){
-        conn.send('hi!');
+        conn.send(data);
     });
 }
 
-function receivePeer() {
-
+function receivePeer(conn) {
+    console.log("RECEIVE DATA");
     peer.on('connection', function(conn) {
         conn.on('data', function(data){
             console.log(data);
