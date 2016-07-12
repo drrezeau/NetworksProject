@@ -26,9 +26,16 @@ function connect2Peer(data) {
     peerUserName = $("#peerUsername").val();
 
     var conn = peer.connect(peerUserName);
-    sendData(data, conn);
-    receivePeer(conn);
     
+    conn.on('open', function(){
+        conn.send(data);
+    });
+    
+    peer.on('connection', function(conn) {
+        conn.on('data', function(data){
+            console.log(data);
+        });
+    });    
 }
 function sendData(data, conn) {
     console.log("SEND DATA");
