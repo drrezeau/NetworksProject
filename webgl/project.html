@@ -353,7 +353,6 @@
 ************************************************************************************************************************/
     function init() {
 
-        receivePeer();
         // Create the scene and set the scene size.
         scene = new THREE.Scene();
         WIDTH = window.innerWidth - 10, HEIGHT = window.innerHeight - 10;
@@ -444,9 +443,11 @@
 *
 ******************************************************************************************************************************/
 function animate() {
-    
-        requestAnimationFrame(animate);
-        render();
+
+    receivePeer();
+
+    requestAnimationFrame(animate);
+    render();
 
     var myTank, enemyTank;
     var myTankMovement, enemyTankMovement;
