@@ -1,6 +1,7 @@
 var myUserName;
 var peerUserName;
 var peer;
+var enemyCommand = ['0', '0', '0', '0', '0'];
 
 function connect2Server() {
     myUserName = $("#myUsername").val();
@@ -38,7 +39,7 @@ function connect2Peer() {
         receiveData(conn);
     });
     conn.on('error', function(err) { alert(err); });
-    hideStuff()
+    hideStuff();
 }
 function sendData(data) {
     // console.log("SEND DATA");
@@ -49,5 +50,9 @@ function receiveData(conn) {
     // console.log("RECEIVE DATA");
     conn.on('data', function(data){
         console.log(data);
+
+        for (var i in data){
+            enemyCommand[i] = data[i];
+        }
     });
 }
