@@ -11,6 +11,8 @@ function connect2Server() {
         console.log('My peer ID is: ' + id);
     });
 
+    peer.on('connection', receiveData);
+
     $("#getMyUsername").addClass('hide');
     $("#getPeerUsername").removeClass('hide');
 
@@ -23,26 +25,29 @@ function hideStuff() {
 }
 
 var conn;
-function connect2Peer(data) {
+function connect2Peer() {
     peerUserName = $("#peerUsername").val();
 
-    conn = peer.connect(peerUserName);
-    conn.on('open', function(){
-        //conn.send(data);
+    conn = peer.connect(peerUserName, {
+        label: 'game',
+        metadata: {message: 'hi I want to play with you!'}
     });
+
+    console.log(peer);
+    conn.on('open', function(){
+        receiveData(conn);
+    });
+    conn.on('error', function(err) { alert(err); });
+    hideStuff()
 }
 function sendData(data) {
     // console.log("SEND DATA");
-    
-        conn.send(data);
-
+    conn.send(data);
 }
 
-function receivePeer() {
+function receiveData(conn) {
     // console.log("RECEIVE DATA");
-    peer.on('connection', function(conn) {
-        conn.on('data', function(data){
-            console.log(data);
-            });
+    conn.on('data', function(data){
+        console.log(data);
     });
 }
