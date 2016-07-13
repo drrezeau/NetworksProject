@@ -344,7 +344,7 @@
     var explosion;
 
     var audio;
-    var player1 = false;
+    var player1 = true;
 
 /***********************************************************************************************************************
 * INIT()
@@ -464,7 +464,7 @@ function animate() {
         enemyTankMovement = tank01Movement;
     }
         keypressMyTank(myTank, myTankMovement, enemyTank);
-        keypressEnemyTank(myTank, myTankMovement, enemyTank);
+        keypressEnemyTank(myTank, enemyTankMovement, enemyTank);
 
         updateBullet(myTank, enemyTank);
         updateBullet(enemyTank, myTank);
@@ -537,25 +537,25 @@ function render() {
 function keypressMyTank(myTank, myTankMovement, enemyTank) {
     if (scene.getObjectByName(myTank.name)) {
         //myTank
-        if (keyboard.pressed("a")) {keyboardLeft(myTank, myTankMovement);}
-        if (keyboard.pressed("d")) {keyboardRight(myTank, myTankMovement);}
-        if (keyboard.pressed("w")) {keyboardUp(myTank, myTankMovement, enemyTank);}
-        if (keyboard.pressed("s")) {keyboardDown(myTank, myTankMovement);}
-        if (keyboard.pressed("f")) {keyboardShoot(myTank, myTankMovement);}
+        var commands = ['0','0','0','0','0'];
+        if (keyboard.pressed("a")) {keyboardLeft(myTank, myTankMovement); commands[0]='1';}
+        if (keyboard.pressed("d")) {keyboardRight(myTank, myTankMovement); commands[1]='1';}
+        if (keyboard.pressed("w")) {keyboardUp(myTank, myTankMovement, enemyTank); commands[2]='1';}
+        if (keyboard.pressed("s")) {keyboardDown(myTank, myTankMovement); commands[3]='1';}
+        if (keyboard.pressed("f")) {keyboardShoot(myTank, myTankMovement); commands[4]='1';}
+//        console.log(commands);
         if (keyboard.pressed("q")) {keyboardChangeCamera(myTank);}
-        sendData("TEST Hi!");
+        sendData(commands);
     }
 }
-function keypressEnemyTank(myTank, myTankMovement, enemyTank) {
+function keypressEnemyTank(myTank, enemyTankMovement, enemyTank) {
     if (scene.getObjectByName(myTank.name)) {
         //EnemyTank
-//        receivePeer();
-        if (keyboard.pressed("left")) {keyboardLeft(myTank, myTankMovement);}
-        if (keyboard.pressed("right")) {keyboardRight(myTank, myTankMovement);}
-        if (keyboard.pressed("up")) {keyboardUp(myTank, myTankMovement, enemyTank);}
-        if (keyboard.pressed("down")) {keyboardDown(myTank, myTankMovement);}
-        if (keyboard.pressed("shift")) {keyboardShoot(myTank, myTankMovement);}
-        if(keyboard.pressed("space")) { keyboardChangeCamera(myTank);}
+        if (enemyCommand[0] == '1') {keyboardLeft(enemyTank, enemyTankMovement);}
+        if (enemyCommand[1] == '1') {keyboardRight(enemyTank, enemyTankMovement);}
+        if (enemyCommand[2] == '1') {keyboardUp(enemyTank, enemyTankMovement, myTank);}
+        if (enemyCommand[3] == '1') {keyboardDown(enemyTank, enemyTankMovement);}
+        if (enemyCommand[4] == '1') {keyboardShoot(enemyTank, enemyTankMovement);}
     }
 }
 
