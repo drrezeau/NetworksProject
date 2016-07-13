@@ -549,7 +549,7 @@ function keypressMyTank(myTank, myTankMovement, enemyTank) {
 function keypressEnemyTank(myTank, myTankMovement, enemyTank) {
     if (scene.getObjectByName(myTank.name)) {
         //EnemyTank
-        receivePeer();
+//        receivePeer();
         if (keyboard.pressed("left")) {keyboardLeft(myTank, myTankMovement);}
         if (keyboard.pressed("right")) {keyboardRight(myTank, myTankMovement);}
         if (keyboard.pressed("up")) {keyboardUp(myTank, myTankMovement, enemyTank);}
