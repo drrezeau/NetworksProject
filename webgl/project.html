@@ -396,7 +396,7 @@
     }
         setUpLight();
         loadObjects();
-        powerUPs();
+//        powerUPs();
         createBrickWalls();
 
         
@@ -471,16 +471,16 @@ function animate() {
         advance(myTank);
         advance(enemyTank);
 
-    if (healthPackOn) {
-        if (healthPackReload) {
-            healthPackReload = false;
-            healthPack.position.set(Math.random() * X_SIZE, 2.5, Math.random() * Z_SIZE);
-            healthPackBox.setFromObject(healthPack);
-            setTimeout(function () {
-                healthPackReload = true;
-            }, 10000);
-        }
-    }
+//    if (healthPackOn) {
+//        if (healthPackReload) {
+//            healthPackReload = false;
+//            healthPack.position.set(Math.random() * X_SIZE, 2.5, Math.random() * Z_SIZE);
+//            healthPackBox.setFromObject(healthPack);
+//            setTimeout(function () {
+//                healthPackReload = true;
+//            }, 10000);
+//        }
+//    }
 
         //only updates the boxes IF the tanks are still in the scene
         if (scene.getObjectByName("Tank1")) {
@@ -496,18 +496,18 @@ function animate() {
             updateExplosion();
         }
 
-    if (ultPowerOn) {
-        if (goldenSnitchReload) {
-            goldenSnitchReload = false;
-            goldenSnitch.position.set(goldenSnitch.position.x += (Math.random() * (Math.random() * 400) * (Math.round(Math.random()) * 2 - 1)) % X_SIZE,
-                    goldenSnitch.position.y,
-                    goldenSnitch.position.z += (Math.random() * (Math.random() * 400) * (Math.round(Math.random()) * 2 - 1)) % Z_SIZE);
-            goldenSnitchBox.setFromObject(goldenSnitch);
-            setTimeout(function () {
-                goldenSnitchReload = true;
-            }, 1000);
-        }
-    }
+//    if (ultPowerOn) {
+//        if (goldenSnitchReload) {
+//            goldenSnitchReload = false;
+//            goldenSnitch.position.set(goldenSnitch.position.x += (Math.random() * (Math.random() * 400) * (Math.round(Math.random()) * 2 - 1)) % X_SIZE,
+//                    goldenSnitch.position.y,
+//                    goldenSnitch.position.z += (Math.random() * (Math.random() * 400) * (Math.round(Math.random()) * 2 - 1)) % Z_SIZE);
+//            goldenSnitchBox.setFromObject(goldenSnitch);
+//            setTimeout(function () {
+//                goldenSnitchReload = true;
+//            }, 1000);
+//        }
+//    }
 }
 /*******************************************************************************************************************************
 * Render
@@ -542,7 +542,7 @@ function keypressMyTank(myTank, myTankMovement, enemyTank) {
         if (keyboard.pressed("d")) {keyboardRight(myTank, myTankMovement); commands[1]='1';}
         if (keyboard.pressed("w")) {keyboardUp(myTank, myTankMovement, enemyTank); commands[2]='1';}
         if (keyboard.pressed("s")) {keyboardDown(myTank, myTankMovement); commands[3]='1';}
-        if (keyboard.pressed("f")) {keyboardShoot(myTank, myTankMovement); commands[4]='1';}
+        if (keyboard.pressed("space")) {keyboardShoot(myTank, myTankMovement); commands[4]='1';}
 //        console.log(commands);
         if (keyboard.pressed("q")) {keyboardChangeCamera(myTank);}
         sendData(commands);
