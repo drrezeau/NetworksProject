@@ -22,30 +22,21 @@ function hideStuff() {
     gameSettings();
 }
 
+var conn;
 function connect2Peer(data) {
     peerUserName = $("#peerUsername").val();
 
-    var conn = peer.connect(peerUserName);
-    
-    conn.on('open', function(){
-        conn.send(data);
-    });
-    
-    peer.on('connection', function(conn) {
-        conn.on('data', function(data){
-            console.log(data);
-        });
-    });    
+    conn = peer.connect(peerUserName);
 }
-function sendData(data, conn) {
-    console.log("SEND DATA");
+function sendData(data) {
+    // console.log("SEND DATA");
     conn.on('open', function(){
         conn.send(data);
     });
 }
 
-function receivePeer(conn) {
-    console.log("RECEIVE DATA");
+function receivePeer() {
+    // console.log("RECEIVE DATA");
     peer.on('connection', function(conn) {
         conn.on('data', function(data){
             console.log(data);

@@ -443,9 +443,7 @@
 *
 ******************************************************************************************************************************/
 function animate() {
-
-    connect2Peer("test Hi!");
-
+    
     requestAnimationFrame(animate);
     render();
 
@@ -545,11 +543,13 @@ function keypressMyTank(myTank, myTankMovement, enemyTank) {
         if (keyboard.pressed("s")) {keyboardDown(myTank, myTankMovement);}
         if (keyboard.pressed("f")) {keyboardShoot(myTank, myTankMovement);}
         if (keyboard.pressed("q")) {keyboardChangeCamera(myTank);}
+        sendData("TEST Hi!");
     }
 }
 function keypressEnemyTank(myTank, myTankMovement, enemyTank) {
     if (scene.getObjectByName(myTank.name)) {
         //EnemyTank
+        receivePeer();
         if (keyboard.pressed("left")) {keyboardLeft(myTank, myTankMovement);}
         if (keyboard.pressed("right")) {keyboardRight(myTank, myTankMovement);}
         if (keyboard.pressed("up")) {keyboardUp(myTank, myTankMovement, enemyTank);}
