@@ -6,7 +6,9 @@ function loadObjects() {
         obj.scale.set(1.4,1.4,1.4);
         scene.add( obj );
         tank01 = obj;
-        
+
+        tank01.startPositionX = 0;
+        tank01.startPositionZ = 0;
         tank01.bullets = [];
         tank01.bulletsRemoved = 0;
         tank01.health = 3;
@@ -39,7 +41,9 @@ function loadObjects() {
         scene.add( obj );
         tank02 = obj;
         tank02.rotation.y = 180 * Math.PI/180;
-        
+
+        tank02.startPositionX = X_SIZE;
+        tank02.startPositionZ = Z_SIZE;
         tank02.position.set(X_SIZE, 0, Z_SIZE);
         tank02.bullets = [];
         tank02.bulletsRemoved = 0;
