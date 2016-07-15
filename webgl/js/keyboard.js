@@ -94,7 +94,7 @@ function keyboardShoot(tank, tankMovement) {
                             scene.add(explosion);
                         }, 50);
                 }else {
-                    tank02.position.set(Math.random() * X_SIZE ,0, Math.random() * Z_SIZE);
+                    tank02.position.set(tank02.startPositionX, 0, tank02.startPositionZ);
                 }
             }
         }else if(tank02Movement.speed == 3 || tank02Movement.speed == 4){
@@ -118,7 +118,7 @@ function keyboardShoot(tank, tankMovement) {
                             scene.add(explosion);
                         }, 50);
                 }else {
-                    tank01.position.set(Math.random() * X_SIZE ,0, Math.random() * Z_SIZE);
+                    tank01.position.set(tank01.startPositionX, 0, tank01.startPositionZ);
                 }
             }
         }
@@ -148,7 +148,7 @@ function keyboardShoot(tank, tankMovement) {
                     scene.add(explosion);
                 }, 50);
         }else {
-            tank.position.set(Math.random() * X_SIZE ,0, Math.random() * Z_SIZE);
+            tank.position.set(tank.startPositionX, 0, tank.startPositionZ);
         }
     }
 
@@ -282,7 +282,7 @@ function keyboardDown(tank, tankMovement) {
                     scene.add(explosion);
                 }, 50);
         }else {
-            tank.position.set(Math.random() * X_SIZE ,0, Math.random() * Z_SIZE);
+            tank.position.set(tank.startPositionX, 0, tank.startPositionZ);
         }
     }
 
