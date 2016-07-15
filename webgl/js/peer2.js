@@ -7,7 +7,7 @@ function connect2Server() {
     myUserName = $("#myUsername").val();
 
 
-    peer = new Peer(myUserName, {key: 'mm63227qa567ds4i'});
+    peer = new Peer(myUserName, {key: 'mm63227qa567ds4i', debug: 3});
     peer.on('open', function (id) {
         console.log('My peer ID is: ' + id);
     });
@@ -38,6 +38,7 @@ function connect2Peer() {
     conn.on('open', function(){
         receiveData(conn);
     });
+    
     conn.on('error', function(err) { alert(err); });
     hideStuff();
 }
