@@ -50,7 +50,7 @@ function sendData(data) {
 function receiveData(conn) {
     // console.log("RECEIVE DATA");
     conn.on('data', function(data){
-        console.log(data);
+        //console.log(data);
 
         for (var i in data){
             enemyCommand[i] = data[i];
