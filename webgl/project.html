@@ -20,10 +20,10 @@
         var fogOn = true;
         var fogIntensity = 3;
         var lightIntensity = 7;
-        var healthPackOn = true;
-        var speedBoostOn = true;
-        var bulletBoostOn = true;
-        var ultPowerOn = true;
+        var healthPackOn = false;
+        var speedBoostOn = false;
+        var bulletBoostOn = false;
+        var ultPowerOn = false;
         var numWalls = 5;
 
     </script>
@@ -351,7 +351,7 @@
     var explosion;
 
     var audio;
-    var player1 = false;
+    var player1 = true ;
 
 /***********************************************************************************************************************
 * INIT()
@@ -420,7 +420,7 @@
 
         scene.add(brickWall);
         scene.add(parkingGarage);
-        explosion = explosion();
+//        explosion = explosion();
 
 
         //add ground
@@ -449,27 +449,36 @@
 *   Renders the scene and updates the render as needed.
 *
 ******************************************************************************************************************************/
+var fps = 30;
+var now;
+var then = Date.now();
+var interval = 1000/fps;
+var delta;
+
 function animate() {
 
     requestAnimationFrame(animate);
-    render();
+    now = Date.now();
+    delta = now - then;
+    if (delta > interval) {
+        render();
 
-    var myTank, enemyTank;
-    var myTankMovement, enemyTankMovement;
-    if (player1) //I AM PLAYER 1
-    {
-        myTank = tank01;
-        myTankMovement = tank01Movement;
-        enemyTank = tank02;
-        enemyTankMovement = tank02Movement;
-    }
-    else //I AM PLAYER 2
-    {
-        myTank = tank02;
-        myTankMovement = tank02Movement;
-        enemyTank = tank01;
-        enemyTankMovement = tank01Movement;
-    }
+        var myTank, enemyTank;
+        var myTankMovement, enemyTankMovement;
+        if (player1) //I AM PLAYER 1
+        {
+            myTank = tank01;
+            myTankMovement = tank01Movement;
+            enemyTank = tank02;
+            enemyTankMovement = tank02Movement;
+        }
+        else //I AM PLAYER 2
+        {
+            myTank = tank02;
+            myTankMovement = tank02Movement;
+            enemyTank = tank01;
+            enemyTankMovement = tank01Movement;
+        }
         keypressMyTank(myTank, myTankMovement, enemyTank);
         keypressEnemyTank(myTank, enemyTankMovement, enemyTank);
 
@@ -478,43 +487,22 @@ function animate() {
         advance(myTank);
         advance(enemyTank);
 
-//    if (healthPackOn) {
-//        if (healthPackReload) {
-//            healthPackReload = false;
-//            healthPack.position.set(Math.random() * X_SIZE, 2.5, Math.random() * Z_SIZE);
-//            healthPackBox.setFromObject(healthPack);
-//            setTimeout(function () {
-//                healthPackReload = true;
-//            }, 10000);
-//        }
-//    }
-
         //only updates the boxes IF the tanks are still in the scene
         if (scene.getObjectByName("Tank1")) {
             tank01.tankBox.setFromObject(tank01);
-//            tank01BoxDisplay.update();
+            //            tank01BoxDisplay.update();
         }
         if (scene.getObjectByName("Tank2")) {
             tank02.tankBox.setFromObject(tank02);
-//            tank02.tank02BoxDisplay.update();
+            //            tank02.tank02BoxDisplay.update();
         }
 
         if (scene.getObjectByName("explosion")) {
             updateExplosion();
         }
 
-//    if (ultPowerOn) {
-//        if (goldenSnitchReload) {
-//            goldenSnitchReload = false;
-//            goldenSnitch.position.set(goldenSnitch.position.x += (Math.random() * (Math.random() * 400) * (Math.round(Math.random()) * 2 - 1)) % X_SIZE,
-//                    goldenSnitch.position.y,
-//                    goldenSnitch.position.z += (Math.random() * (Math.random() * 400) * (Math.round(Math.random()) * 2 - 1)) % Z_SIZE);
-//            goldenSnitchBox.setFromObject(goldenSnitch);
-//            setTimeout(function () {
-//                goldenSnitchReload = true;
-//            }, 1000);
-//        }
-//    }
+        then = now - (delta % interval);
+    }
 }
 /*******************************************************************************************************************************
 * Render
