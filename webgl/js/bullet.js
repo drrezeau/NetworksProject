@@ -117,7 +117,7 @@ function updateBullet(tank, otherTank) {
                     
                 } else { 
                     //Random respawn
-                    otherTank.position.set(0, 25, -50);
+                    otherTank.position.set(Math.random() * X_SIZE ,0, Math.random() * Z_SIZE);
                 }
                 
                 var tmp = tank.bullets[i];
