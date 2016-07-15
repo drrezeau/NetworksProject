@@ -3,10 +3,15 @@
 <head>
   <title>Battle Tanks</title>
 
+    <script>
+        var X_SIZE = 500;
+        var Z_SIZE = 500;
+    </script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="default.css">
     <script src="bower_components/peer.js"></script>
     <script src="js/peer2.js"></script>
+    <!--<script src="js/createMap.js"></script>-->
 
 </head>
 <body>
@@ -20,9 +25,7 @@
         var bulletBoostOn = true;
         var ultPowerOn = true;
         var numWalls = 5;
-        
-        var X_SIZE = 500;
-        var Z_SIZE = 500;
+
     </script>
     <script src="js/userSettings.js"></script>
     <script src="js/jquery-1.11.3.min.js"></script>
@@ -90,7 +93,11 @@
 
     <script type="x-shader/x-vertex" id="vertexShader">
         // GLSL textureless classic 3D noise "cnoise",
-        // with an RSL-style periodic variant "pnoise".
+        // with anvar x = Math.random() * 20;
+                var y = 60;
+                var z = Math.random() * 120;
+                myGeo[i] = [x,y,z];
+                geometry = new THREE.BoxGeometry( x, y, z ); RSL-style periodic variant "pnoise".
         // Author:  Stefan Gustavson (stefan.gustavson@liu.se)
         // Version: 2011-10-11
         //
@@ -344,7 +351,7 @@
     var explosion;
 
     var audio;
-    var player1 = false;
+    var player1 = true;
 
 /***********************************************************************************************************************
 * INIT()
