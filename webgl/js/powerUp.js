@@ -31,7 +31,7 @@ function powerUPs() {
                 var g = new THREE.CubeGeometry(5, 2.5, 5, 1, 1, 1);
                 healthPack = new THREE.Mesh(g, material);
                 healthPack.position.y = 5;
-                healthPack.position.set(250, 2.5, 425);
+                healthPack.position.set(-100000,-100000,-100000);
                 scene.add(healthPack);
 
                 healthPackBox = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
@@ -65,7 +65,7 @@ function powerUPs() {
                 var g = new THREE.CubeGeometry(5, 2.5, 5, 1, 1, 1);
                 speedBoost = new THREE.Mesh(g, material);
                 speedBoost.position.y = 5;
-                speedBoost.position.set(250, 2.5, 75);
+                speedBoost.position.set(-100000,-100000,-100000);
                 scene.add(speedBoost);
 
                 speedBoostBox = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
@@ -99,7 +99,7 @@ function powerUPs() {
                 var g = new THREE.CubeGeometry(5, 2.5, 5, 1, 1, 1);
                 bulletSpeedBoost = new THREE.Mesh(g, material);
                 bulletSpeedBoost.position.y = 5;
-                bulletSpeedBoost.position.set(250, 2.5,250);
+                bulletSpeedBoost.position.set(-100000,-100000,-100000);
                 scene.add(bulletSpeedBoost);
 
                 bulletSpeedBoostBox = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
