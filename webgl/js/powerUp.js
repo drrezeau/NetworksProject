@@ -133,7 +133,7 @@ function powerUPs() {
                 var g = new THREE.CubeGeometry(10, 5, 10, 1, 1, 1);
                 goldenSnitch = new THREE.Mesh(g, material);
                 goldenSnitch.position.y = 5;
-                goldenSnitch.position.set(Math.random() * X_SIZE, 2.5, Math.random() * Z_SIZE);
+                goldenSnitch.position.set(-100000,-1000000,-100000);
                 scene.add(goldenSnitch);
 
                 goldenSnitchBox = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
